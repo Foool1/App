@@ -38,6 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'api_weather',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'hangman',
+    'password_generator',
+    'QR_coder',
+    'TicTacToe',
 ]
 
 MIDDLEWARE = [
