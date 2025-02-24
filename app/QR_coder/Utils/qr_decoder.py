@@ -1,7 +1,6 @@
-
 import qrcode
 
-data = ''
+data = 'www.akademiakaszubska.com'
 
 img = qrcode.make(data)
 

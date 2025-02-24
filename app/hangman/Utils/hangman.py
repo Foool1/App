@@ -32,7 +32,7 @@ def winning(word_list):
 word = random.choice(words)
 print(word)
 
-live = 5
+live = 10
 
 
 word_list = []
