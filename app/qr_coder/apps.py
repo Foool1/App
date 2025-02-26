@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TictactoeConfig(AppConfig):
+class QrCoderConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "TicTacToe"
+    name = "qr_coder"

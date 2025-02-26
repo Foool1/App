@@ -8,6 +8,7 @@ password 100%
 
 To Do:
 Timer
+API_weather
 TicTacToe
 Hangman
 QRCode

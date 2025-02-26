@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 32px;
+        }
+        .menu {
+            margin-top: 30px;
+        }
+        .menu a {
+            display: block;
+            margin: 10px auto;
+            width: 200px;
+            padding: 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .menu a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Select Aplication:</h1>
+    <div class="menu">
+        <a href="{% url 'generate-password' %}">Password Generator</a>
+        <a href="{% url 'timer' %}">Timer</a>
+        <a href="{% url 'tictactoe' %}">TicTacToe</a>
+        <a href="{% url 'qr-coder' %}">QR Coder</a>
+        <a href="{% url 'hangman' %}">Hangman</a>
+        <a href="{% url 'weather' %}">Weather</a>
+    </div>
+
+</body>
+</html>

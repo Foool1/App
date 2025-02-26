@@ -1,3 +1,5 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
-# Create your views here.
+def hangman_view(request):
+    return render(request, 'hangman/hangman.html')
