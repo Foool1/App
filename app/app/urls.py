@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from core.views import main_page
+from password_generator.views import (
+    password_generator_view,
+    password_generator_page_view,
+)
 urlpatterns = [
+    path('', main_page, name='main-page'),
     path('admin/', admin.site.urls),
+    path('generate-password/', password_generator_page_view, name='generate-password'),
+    path('api/generate-password/', password_generator_view, name='generate-password-api'),
 ]

@@ -1,3 +1,6 @@
 # base
 base for new DRF projects
-aaa
+
+Ideas:
+
+background remover
