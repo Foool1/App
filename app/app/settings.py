@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'qr_coder',
     'tictactoe',
     'timer',
+    'background_remover',
 ]
 
 MIDDLEWARE = [
