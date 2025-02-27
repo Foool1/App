@@ -20,7 +20,10 @@ from password_generator.views import (
     password_generator_view,
     password_generator_page_view,
 )
-from timer.views import timer_view
+from timer.views import (
+    timer_view,
+    timer_api_view,
+)
 from tictactoe.views import tictactoe_view
 from qr_coder.views import qr_code_view
 from hangman.views import hangman_view
@@ -32,10 +35,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('timer/', timer_view, name='timer'),
     path('generate-password/', password_generator_page_view, name='generate-password'),
-    path('api/generate-password/', password_generator_view, name='generate-password-api'),
     path('tictactoe/', tictactoe_view, name='tictactoe'),
     path('qr-coder/', qr_code_view, name='qr-coder'),
     path('hangman/', hangman_view, name='hangman'),
     path('weather/', weather_view, name='weather'),
     path('background-remover', background_remover_view, name='background-remover'),
+    path('api/generate-password/', password_generator_view, name='generate-password-api'),
+    path('api/timer/', timer_api_view, name='timer-api-view'),
 ]

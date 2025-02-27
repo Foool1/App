@@ -41,6 +41,17 @@
     <div class="exit">
         <a href="{% url 'main-page' %}">Exit</a>
     </div>
+    <script>
+        function Timer() {
+            let length = document.getElementById('time').value;
+            fetch(`/api/timer/?time=${time}`)  // 🔹 Zmiana URL-a na /api/generate-password/
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('time').innerText = data.password;
+                })
+                .catch(error => console.error('Błąd:', error));
+        }
+    </script>
 
 </body>
 </html>
