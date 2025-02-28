@@ -23,6 +23,7 @@ from password_generator.views import (
 from timer.views import (
     timer_view,
     timer_api_view,
+    stopwatch_api_view,
 )
 from tictactoe.views import tictactoe_view
 from qr_coder.views import qr_code_view
@@ -42,4 +43,5 @@ urlpatterns = [
     path('background-remover', background_remover_view, name='background-remover'),  # noqa
     path('api/generate-password/', password_generator_view, name='generate-password-api'),  # noqa
     path('api/timer/', timer_api_view, name='timer-api-view'),
+    path('api/stopwatch/',stopwatch_api_view, name='stopwatch'),
 ]

@@ -19,11 +19,22 @@ def timer_api_view(request):
     elif 'end_time' in request.session:
         end_time = datetime.fromisoformat(request.session['end_time'])
         remaining_time = max(0, int((end_time - datetime.now()).total_seconds()))
-        print(remaining_time)
+        request.session.modified = True
         print(format_time(remaining_time))
         return JsonResponse({'time': format_time(remaining_time)})
 
     return JsonResponse({'error': 'error'}, status=400)
+
+
+def stopwatch_api_view(request):
+    if 'stopwatch' in request.session:
+        seconds = int(request.GET.get('stopwatch', 10))
+        print("dupa")
+        seconds += 1
+        request.session.modified = True
+
+    return JsonResponse({'time': format_time(seconds)})
+
 
 def format_time(seconds):
     hours = int(seconds / 3600)

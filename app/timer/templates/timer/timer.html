@@ -25,6 +25,16 @@
             display: inline-block;
             min-width: 200px;
         }
+        #stopwatch {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            min-width: 200px;
+        }
         input {
             font-size: 18px;
             padding: 5px;
@@ -65,6 +75,9 @@
     <button onclick="Timer()">Start</button>
     <p id="timeDisplay">0</p>
 
+    <h1>Stopwatch</h1>
+    <button onclick="stopwatch()">Start</button>
+    <p id="stopwatch">0</p>
 
     <div class="exit">
         <a href="{% url 'main-page' %}">Exit</a>
@@ -74,14 +87,18 @@
         let hours = parseInt(document.getElementById('hoursInput').value, 10);
         let minutes = parseInt(document.getElementById('minutesInput').value, 10);
         let seconds = parseInt(document.getElementById('secondsInput').value, 10);
+        let time = (hours*3600+minutes*60+seconds);
+        let stopwatchTime = 0;
 
-
-        time = (hours*3600+minutes*60+seconds)
         fetch(`/api/timer/?time=${time}`)
+            .then(()=> {
+                if (!response.ok) throw new Error('Server error');
+                return response.json();
+            })
             .then(() => {
                 document.getElementById('timeDisplay').innerText = time;
                 updateTime();
-            });
+            })
         }
 
         function updateTime() {
@@ -90,17 +107,29 @@
                 .then(data => {
                     if (data.time !== undefined) {
                         document.getElementById('timeDisplay').innerText = data.time;
-                        if (data.time > 0){
+                        if (data.time !== "00:00:00") {
                             setTimeout(updateTime, 1000);
                         }
+
+
                     } else {
                         console.error('Błędna odpowiedź serwera:', data);
                     }
                 }).catch(error => console.error('Błąd:', error));
-            updateTime()
         }
+        function stopwatch(){
+            fetch(`/api/stopwatch/?stopwatchTime=${stopwatchTime}`)
+            .then(()=> {
+                if (!response.ok) throw new Error('Server error');
+                return response.json();
+            })
+            .then(response => response.json())
+            document.getElementById('stopwatch').innerText = data.time;
+            setTimeout(updateTime, 1000);
+            }
 
 
+        window.onload = updateTime;
     </script>
 
 </body>
