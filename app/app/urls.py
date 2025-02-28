@@ -34,12 +34,12 @@ urlpatterns = [
     path('', main_page, name='main-page'),
     path('admin/', admin.site.urls),
     path('timer/', timer_view, name='timer'),
-    path('generate-password/', password_generator_page_view, name='generate-password'),
+    path('generate-password/', password_generator_page_view, name='generate-password'),  # noqa
     path('tictactoe/', tictactoe_view, name='tictactoe'),
     path('qr-coder/', qr_code_view, name='qr-coder'),
     path('hangman/', hangman_view, name='hangman'),
     path('weather/', weather_view, name='weather'),
-    path('background-remover', background_remover_view, name='background-remover'),
-    path('api/generate-password/', password_generator_view, name='generate-password-api'),
+    path('background-remover', background_remover_view, name='background-remover'),  # noqa
+    path('api/generate-password/', password_generator_view, name='generate-password-api'),  # noqa
     path('api/timer/', timer_api_view, name='timer-api-view'),
 ]

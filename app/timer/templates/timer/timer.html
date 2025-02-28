@@ -15,6 +15,25 @@
                 .exit {
             margin-top: 30px;
         }
+        #timeDisplay {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            min-width: 200px;
+        }
+        input {
+            font-size: 18px;
+            padding: 5px;
+            width: 60px;
+            text-align: center;
+            margin-bottom: 10px;
+            background-color: #202123;
+            color: white;
+        }
         .exit a {
             display: block;
             position: absolute;
@@ -36,6 +55,15 @@
 </head>
 <body>
     <h1>Timer</h1>
+    <label for="hoursInput">Hours:</label>
+    <input type="number" id="hoursInput" value="0" min="0" max="60">
+    <label for="minutesInput">Minutes:</label>
+    <input type="number" id="minutesInput" value="0" min="0" max="60">
+    <label for="secondsInput">Seconds:</label>
+    <input type="number" id="secondsInput" value="0" min="0" max="60">
+
+    <button onclick="Timer()">Start</button>
+    <p id="timeDisplay">0</p>
 
 
     <div class="exit">
@@ -43,14 +71,36 @@
     </div>
     <script>
         function Timer() {
-            let length = document.getElementById('time').value;
-            fetch(`/api/timer/?time=${time}`)  // 🔹 Zmiana URL-a na /api/generate-password/
+        let hours = parseInt(document.getElementById('hoursInput').value, 10);
+        let minutes = parseInt(document.getElementById('minutesInput').value, 10);
+        let seconds = parseInt(document.getElementById('secondsInput').value, 10);
+
+
+        time = (hours*3600+minutes*60+seconds)
+        fetch(`/api/timer/?time=${time}`)
+            .then(() => {
+                document.getElementById('timeDisplay').innerText = time;
+                updateTime();
+            });
+        }
+
+        function updateTime() {
+            fetch(`/api/timer/`)
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('time').innerText = data.password;
-                })
-                .catch(error => console.error('Błąd:', error));
+                    if (data.time !== undefined) {
+                        document.getElementById('timeDisplay').innerText = data.time;
+                        if (data.time > 0){
+                            setTimeout(updateTime, 1000);
+                        }
+                    } else {
+                        console.error('Błędna odpowiedź serwera:', data);
+                    }
+                }).catch(error => console.error('Błąd:', error));
+            updateTime()
         }
+
+
     </script>
 
 </body>
