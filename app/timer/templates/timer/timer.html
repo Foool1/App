@@ -25,7 +25,7 @@
             display: inline-block;
             min-width: 200px;
         }
-        #stopwatch {
+        #stopwatchDisplay {
             font-size: 24px;
             margin-top: 20px;
             font-weight: bold;
@@ -72,33 +72,38 @@
     <label for="secondsInput">Seconds:</label>
     <input type="number" id="secondsInput" value="0" min="0" max="60">
 
-    <button onclick="Timer()">Start</button>
+    <button onclick="startTimer()">Start</button>
     <p id="timeDisplay">0</p>
+
+
 
     <h1>Stopwatch</h1>
     <button onclick="stopwatch()">Start</button>
-    <p id="stopwatch">0</p>
+    <p id="stopwatchDisplay">00:00:00</p>
+
+
 
     <div class="exit">
         <a href="{% url 'main-page' %}">Exit</a>
     </div>
     <script>
-        function Timer() {
+        function startTimer() {
         let hours = parseInt(document.getElementById('hoursInput').value, 10);
         let minutes = parseInt(document.getElementById('minutesInput').value, 10);
         let seconds = parseInt(document.getElementById('secondsInput').value, 10);
         let time = (hours*3600+minutes*60+seconds);
-        let stopwatchTime = 0;
+
 
         fetch(`/api/timer/?time=${time}`)
-            .then(()=> {
+            .then(response => {
                 if (!response.ok) throw new Error('Server error');
                 return response.json();
             })
-            .then(() => {
-                document.getElementById('timeDisplay').innerText = time;
+            .then(data => {
+                document.getElementById('timeDisplay').innerText = data.time;
                 updateTime();
             })
+            .catch(error => console.error('Error', error));
         }
 
         function updateTime() {
@@ -106,30 +111,37 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.time !== undefined) {
-                        document.getElementById('timeDisplay').innerText = data.time;
-                        if (data.time !== "00:00:00") {
-                            setTimeout(updateTime, 1000);
-                        }
-
+                        document.getElementById('stopwatchDisplay').innerText = data.stopwatchTime;
+                        setTimeout(updateTime, 1000);
 
                     } else {
                         console.error('Błędna odpowiedź serwera:', data);
                     }
                 }).catch(error => console.error('Błąd:', error));
         }
+        let stopwatchTime = 0;
         function stopwatch(){
+            stopwatchTime = parseInt(stopwatchTime);
             fetch(`/api/stopwatch/?stopwatchTime=${stopwatchTime}`)
-            .then(()=> {
+            .then(response => {
                 if (!response.ok) throw new Error('Server error');
                 return response.json();
             })
-            .then(response => response.json())
-            document.getElementById('stopwatch').innerText = data.time;
-            setTimeout(updateTime, 1000);
+            .then(data => {
+                if (data.stopwatchTime !== undefined) {
+
+                document.getElementById('stopwatchDisplay').innerText = data.stopwatchTime;
+                stopwatchTime += 1;
+                setTimeout(stopwatch, 1000);
+            } else {
+                console.error('Błędna odpowiedź serwera:', data);
             }
 
+                // updateStopwatchTime();
+            }).catch(error => console.error('Error', error));
+        }
 
-        window.onload = updateTime;
+
     </script>
 
 </body>

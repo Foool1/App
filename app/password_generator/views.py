@@ -1,4 +1,6 @@
-from django.http import JsonResponse
+from rest_framework.views import APIView  # type: ignore
+from rest_framework.response import Response  # type: ignore
+from rest_framework import status  # type: ignore
 from django.shortcuts import render
 import random
 
@@ -20,8 +22,13 @@ def password_generator_page_view(request):
     return render(request, 'generate_password.html')
 
 
-def password_generator_view(request):
-    length = request.GET.get('length', 12)
-    length = int(length)
-    password = generate_password(length)
-    return JsonResponse({'password': password})
+class PasswordGeneratorAPIView(APIView):
+    def get(self, request):
+        """API endpoint do generowania hasła"""
+        try:
+            length = int(request.GET.get('length', 12))
+        except ValueError:
+            return Response({'error': 'Invalid length parameter'}, status=status.HTTP_400_BAD_REQUEST)
+
+        password = generate_password(length)
+        return Response({'password': password}, status=status.HTTP_200_OK)

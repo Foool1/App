@@ -17,13 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from core.views import main_page
 from password_generator.views import (
-    password_generator_view,
     password_generator_page_view,
+    PasswordGeneratorAPIView,
 )
 from timer.views import (
     timer_view,
-    timer_api_view,
-    stopwatch_api_view,
+    stopwatchAPIView,
+    TimerAPIView,
 )
 from tictactoe.views import tictactoe_view
 from qr_coder.views import qr_code_view
@@ -41,7 +41,7 @@ urlpatterns = [
     path('hangman/', hangman_view, name='hangman'),
     path('weather/', weather_view, name='weather'),
     path('background-remover', background_remover_view, name='background-remover'),  # noqa
-    path('api/generate-password/', password_generator_view, name='generate-password-api'),  # noqa
-    path('api/timer/', timer_api_view, name='timer-api-view'),
-    path('api/stopwatch/',stopwatch_api_view, name='stopwatch'),
+    path('api/generate-password/', PasswordGeneratorAPIView.as_view(), name='generate-password-api'),  # noqa
+    path('api/timer/', TimerAPIView.as_view(), name='timer-api-view'),
+    path('api/stopwatch/',stopwatchAPIView.as_view(), name='stopwatch'),
 ]
