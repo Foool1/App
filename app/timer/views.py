@@ -17,7 +17,6 @@ class TimerAPIView(APIView):
             end_time = start_time + timedelta(seconds=countdown_time)
             request.session['end_time'] = end_time.isoformat()
             request.session.modified = True
-            print("chuj")
 
             return Response({'time': format_time(countdown_time)}, status=status.HTTP_200_OK)
 
@@ -25,13 +24,19 @@ class TimerAPIView(APIView):
             end_time = datetime.fromisoformat(request.session['end_time'])
             remaining_time = max(0, int((end_time - datetime.now()).total_seconds()))
             request.session.modified = True
-
+            print(format_time(remaining_time))
             return Response({'time': format_time(remaining_time)}, status=status.HTTP_200_OK)
 
         return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-
+    def post(self, request):
+        if 'end_time' in request.session:
+            del request.session['end_time']
+            request.session.modified = True
+            return Response({'message': 'Timer zresetowany'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'Brak aktywnego timera do zresetowania'}, status=status.HTTP_200_OK)
 
 class stopwatchAPIView(APIView):
 
@@ -50,13 +55,6 @@ def format_time(seconds):
     seconds = int(rest)
 
     return f"{hours:02}:{minutes:02}:{seconds:02}"
-# def stopwatch_api_view(request):
-#     if 'stopwatch' in request.session:
-#         seconds = int(request.GET.get('stopwatch', 10))
-#         print("dupa")
-#         seconds += 1
-#         request.session.modified = True
 
-#     return JsonResponse({'time': format_time(seconds)})
 
 

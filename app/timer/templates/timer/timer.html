@@ -36,15 +36,43 @@
             min-width: 200px;
 
         }
+        #time {
+            font-size: 64px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            display: inline-block;
+            min-width: 200px;
+
+        }
         input {
             font-size: 18px;
             padding: 5px;
             width: 60px;
             text-align: center;
             margin-bottom: 10px;
-            background-color: #202123;
+            background-color: #757575;
+            border: 1px solid #757575;
             color: white;
         }
+        .start-button {
+            display: block;
+            margin: 10px;
+            width: 100px;
+            padding: 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #757575;
+            border-radius: 5px;
+            font-size: 18px;
+}
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+}
+
         .exit a {
             display: block;
             position: absolute;
@@ -65,52 +93,62 @@
     </style>
 </head>
 <body>
-    <h1>Time</h1>
     <p id="time"></p>
 
-
-
     <h1>Timer</h1>
-    <label for="hoursInput">Hours:</label>
+    <label for="hoursInput">Hours: /\</label>
+    <label for="minutesInput"> Minutes: /\</label>
+    <label for="secondsInput">Seconds:</label><br>
     <input type="number" id="hoursInput" value="0" min="0" max="60">
-    <label for="minutesInput">Minutes:</label>
     <input type="number" id="minutesInput" value="0" min="0" max="60">
-    <label for="secondsInput">Seconds:</label>
-    <input type="number" id="secondsInput" value="0" min="0" max="60">
-
-    <button onclick="startTimer()">Start</button>
-    <p id="timeDisplay">0</p>
-
+    <input type="number" id="secondsInput" value="0" min="0" max="60"><br>
+    <p id="timeDisplay">00:00:00</p><br>
+    <div class="button-container">
+        <button onclick="startTimer()" class="start-button" >Start</button>
+        <button onclick="resetTimer()" class="start-button" >Reset</button>
+    </div>
 
 
     <h1>Stopwatch</h1>
-    <button onclick="stopwatch()">Start</button>
-    <p id="stopwatchDisplay">0</p>
+    <p id="stopwatchDisplay">0</p><br>
+    <div class="button-container">
+        <button onclick="startStopwatch()" class="start-button">Start</button>
+        <button onclick="stopStopwatch()" class="start-button"> Stop</button>
+        <button onclick="resetStopwatch()" class="start-button">Reset</button>
+    </div>
 
 
 
     <div class="exit">
         <a href="{% url 'main-page' %}">Exit</a>
     </div>
+
     <script>
+        let isTimerRunning = false;
         function startTimer() {
-        let hours = parseInt(document.getElementById('hoursInput').value, 10);
-        let minutes = parseInt(document.getElementById('minutesInput').value, 10);
-        let seconds = parseInt(document.getElementById('secondsInput').value, 10);
-        let time = (hours*3600+minutes*60+seconds);
+            let hours = parseInt(document.getElementById('hoursInput').value, 10);
+            let minutes = parseInt(document.getElementById('minutesInput').value, 10);
+            let seconds = parseInt(document.getElementById('secondsInput').value, 10);
+            let time = (hours*3600+minutes*60+seconds);
 
+            if (isTimerRunning) {
+                return;
+            }
 
-        fetch(`/api/timer/?time=${time}`)
-            .then(response => {
-                if (!response.ok) throw new Error('Server error');
-                return response.json();
-            })
-            .then(data => {
-                document.getElementById('timeDisplay').innerText = data.time;
-                updateTime();
-            })
-            .catch(error => console.error('Error', error));
-        }
+            fetch(`/api/timer/?time=${time}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Server error');
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('timeDisplay').innerText = data.time;
+                    if (data.time !== "00:00:00"){
+                        isTimerRunning = true;
+                        updateTime();
+                    }
+                })
+                .catch(error => console.error('Error', error));
+            }
 
         function updateTime() {
             fetch(`/api/timer/`)
@@ -118,15 +156,44 @@
                 .then(data => {
                     if (data.time !== undefined) {
                         document.getElementById('timeDisplay').innerText = data.time;
-                        setTimeout(updateTime, 1000);
+                        if (data.time !== "00:00:00"){
+                            setTimeout(updateTime, 1000);
+                        } else {
+                            isTimerRunning = false;
+                        }
 
                     } else {
                         console.error('Server error:', data);
                     }
                 }).catch(error => console.error('Error:', error));
         }
+
+        function resetTimer() {
+            isTimerRunning = false;
+
+            document.getElementById('timeDisplay').innerText = "00:00:00";
+
+            document.getElementById('hoursInput').value = 0;
+            document.getElementById('minutesInput').value = 0;
+            document.getElementById('secondsInput').value = 0;
+
+            fetch('/api/timer/', { method: 'POST' })
+                .then(response => {
+                    if (!response.ok) throw new Error('Błąd serwera');
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Timer zresetowany na serwerze:', data);
+                })
+                .catch(error => console.error('Błąd podczas resetowania timera:', error));
+        }
+
+
         let stopwatchTime = 0;
+        let isStopwatchRunning = false;
         function stopwatch(){
+            if (!isStopwatchRunning) return;
+
             stopwatchTime = parseInt(stopwatchTime);
             fetch(`/api/stopwatch/?stopwatchTime=${stopwatchTime}`)
             .then(response => {
@@ -138,12 +205,31 @@
 
                 document.getElementById('stopwatchDisplay').innerText = data.stopwatchTime;
                 stopwatchTime += 1;
+                if (isStopwatchRunning) {
                 setTimeout(stopwatch, 1000);
+                }
             } else {
                 console.error('Server error:', data);
             }
             }).catch(error => console.error('Error', error));
         }
+        function startStopwatch() {
+            if (!isStopwatchRunning) {
+                isStopwatchRunning = true;
+                stopwatch();
+            }
+        }
+
+        function stopStopwatch() {
+            isStopwatchRunning = false;
+        }
+
+        function resetStopwatch() {
+            isStopwatchRunning = false;
+            stopwatchTime = 0;
+            document.getElementById('stopwatchDisplay').innerText = '0';
+        }
+
         function zegar() {
             setInterval(() => {
                 let date = new Date();
@@ -151,9 +237,10 @@
                 document.querySelector("#time").innerHTML = date.toISOString().substr(11, 8);
             }, 1000);
         }
+
         window.onload = function(){
             zegar();
-}
+        }
     </script>
 
 </body>
