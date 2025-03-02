@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'hangman',
     'password_generator',
     'qr_coder',
-    'tictactoe',
     'timer',
     'background_remover',
 ]

@@ -25,7 +25,6 @@ from timer.views import (
     stopwatchAPIView,
     TimerAPIView,
 )
-from tictactoe.views import tictactoe_view
 from qr_coder.views import qr_code_view
 from hangman.views import hangman_view
 from api_weather.views import weather_view
@@ -36,7 +35,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('timer/', timer_view, name='timer'),
     path('generate-password/', password_generator_page_view, name='generate-password'),  # noqa
-    path('tictactoe/', tictactoe_view, name='tictactoe'),
     path('qr-coder/', qr_code_view, name='qr-coder'),
     path('hangman/', hangman_view, name='hangman'),
     path('weather/', weather_view, name='weather'),
