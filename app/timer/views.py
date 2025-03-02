@@ -17,6 +17,7 @@ class TimerAPIView(APIView):
             end_time = start_time + timedelta(seconds=countdown_time)
             request.session['end_time'] = end_time.isoformat()
             request.session.modified = True
+            print("chuj")
 
             return Response({'time': format_time(countdown_time)}, status=status.HTTP_200_OK)
 

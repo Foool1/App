@@ -34,6 +34,7 @@
             border: 1px solid #ddd;
             display: inline-block;
             min-width: 200px;
+
         }
         input {
             font-size: 18px;
@@ -64,6 +65,11 @@
     </style>
 </head>
 <body>
+    <h1>Time</h1>
+    <p id="time"></p>
+
+
+
     <h1>Timer</h1>
     <label for="hoursInput">Hours:</label>
     <input type="number" id="hoursInput" value="0" min="0" max="60">
@@ -79,7 +85,7 @@
 
     <h1>Stopwatch</h1>
     <button onclick="stopwatch()">Start</button>
-    <p id="stopwatchDisplay">00:00:00</p>
+    <p id="stopwatchDisplay">0</p>
 
 
 
@@ -111,13 +117,13 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.time !== undefined) {
-                        document.getElementById('stopwatchDisplay').innerText = data.stopwatchTime;
+                        document.getElementById('timeDisplay').innerText = data.time;
                         setTimeout(updateTime, 1000);
 
                     } else {
-                        console.error('Błędna odpowiedź serwera:', data);
+                        console.error('Server error:', data);
                     }
-                }).catch(error => console.error('Błąd:', error));
+                }).catch(error => console.error('Error:', error));
         }
         let stopwatchTime = 0;
         function stopwatch(){
@@ -134,14 +140,20 @@
                 stopwatchTime += 1;
                 setTimeout(stopwatch, 1000);
             } else {
-                console.error('Błędna odpowiedź serwera:', data);
+                console.error('Server error:', data);
             }
-
-                // updateStopwatchTime();
             }).catch(error => console.error('Error', error));
         }
-
-
+        function zegar() {
+            setInterval(() => {
+                let date = new Date();
+                date.setTime(date.getTime() + 3600000);
+                document.querySelector("#time").innerHTML = date.toISOString().substr(11, 8);
+            }, 1000);
+        }
+        window.onload = function(){
+            zegar();
+}
     </script>
 
 </body>
