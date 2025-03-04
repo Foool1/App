@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'api_weather',
     'rest_framework',
     'rest_framework.authtoken',
-    'hangman',
     'password_generator',
     'qr_coder',
     'timer',

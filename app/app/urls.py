@@ -26,7 +26,6 @@ from timer.views import (
     TimerAPIView,
 )
 from qr_coder.views import qr_code_view
-from hangman.views import hangman_view
 from api_weather.views import weather_view
 from background_remover.views import background_remover_view
 
@@ -36,7 +35,6 @@ urlpatterns = [
     path('timer/', timer_view, name='timer'),
     path('generate-password/', password_generator_page_view, name='generate-password'),  # noqa
     path('qr-coder/', qr_code_view, name='qr-coder'),
-    path('hangman/', hangman_view, name='hangman'),
     path('weather/', weather_view, name='weather'),
     path('background-remover', background_remover_view, name='background-remover'),  # noqa
     path('api/generate-password/', PasswordGeneratorAPIView.as_view(), name='generate-password-api'),  # noqa
