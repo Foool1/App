@@ -32,6 +32,42 @@
         .exit a:hover {
             background-color: #121212;
         }
+        .input-container {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #757575;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #121212;
+        }
+        .output {
+            border: 1px solid white;
+            padding: 10px;
+            width: 400px;
+            margin: 20px auto;
+            min-height: 30px;
+            text-align: left;
+            font-size: 25px;
+            cursor: text;
+            background-color: #333;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
     </style>
 </head>
 <body>
@@ -40,5 +76,27 @@
         <a href="{% url 'main-page' %}">Exit</a>
     </div>
 
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="Enter city name...">
+        <button onclick="handleClick()">Send</button>
+    </div>
+    <div class="output" id="output" contenteditable="true">weather output</div>
+
+    <script>
+        function handleClick() {
+            let weatherValue = document.getElementById("userInput").value;
+            fetch(`/api/weather/?weather=${weatherValue}`)
+                .then(response => response.json())
+                .then(data =>{
+                    if (data.error) {
+                        alert("Error: " + data.error);
+                    } else {
+                        document.getElementById('output').innerText =
+                            `City: ${data.city},\n Temperature: ${data.temperature}°C,\n Sky: ${data.description},
+                            Wind: ${data.wind}m/s,\n`;
+            }
+            })
+        }
+    </script>
 </body>
 </html>

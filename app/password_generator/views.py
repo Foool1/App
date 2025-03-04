@@ -17,6 +17,7 @@ def generate_password(length):
         password += random.choice(chars)
     return password
 
+
 def password_generator_page_view(request):
     """Widok renderujący stronę HTML"""
     return render(request, 'generate_password.html')
@@ -28,7 +29,7 @@ class PasswordGeneratorAPIView(APIView):
         try:
             length = int(request.GET.get('length', 12))
         except ValueError:
-            return Response({'error': 'Invalid length parameter'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Invalid length parameter'}, status=status.HTTP_400_BAD_REQUEST)  # noqa
 
         password = generate_password(length)
         return Response({'password': password}, status=status.HTTP_200_OK)

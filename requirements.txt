@@ -3,3 +3,4 @@ djangorestframework>=3.12.4,<3.13
 psycopg2>=2.8.6,<2.9
 qrcode[pil]>=7.3,<7.4
 pyzbar>=0.1.8,<0.2
+requests
