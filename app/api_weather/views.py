@@ -1,4 +1,4 @@
-import requests
+import requests, datetime
 
 from rest_framework.views import APIView  # type: ignore
 from rest_framework.response import Response  # type: ignore
@@ -29,12 +29,21 @@ def weatherGenerator(city):
 
     weather_data = requests.get(url).json()
     pprint(weather_data)
+    sunrise = datetime.datetime.fromtimestamp(weather_data['sys']['sunrise']+3600)
+    sunset = datetime.datetime.fromtimestamp(weather_data['sys']['sunset']+3600)
+    print(sunrise.strftime('%H:%M:%S'))
+    print(sunset.strftime('%H:%M:%S'))
     if 'weather' in weather_data and 'main' in weather_data:
         return {
             'temperature': weather_data['main']['temp'],
+            'perceived': weather_data['main']['feels_like'],
+            'humidity': weather_data['main']['humidity'],
             'description': weather_data['weather'][0]['description'],
             'city': weather_data['name'],
             'wind': weather_data['wind']['speed'],
+            'pressure': weather_data['main']['pressure'],
+            'sunrise': sunrise.strftime('%H:%M:%S'),
+            'sunset': sunset.strftime('%H:%M:%S'),
         }
     else:
         return {'error': 'City not found'}

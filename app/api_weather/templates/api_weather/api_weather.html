@@ -80,7 +80,7 @@
         <input type="text" id="userInput" placeholder="Enter city name...">
         <button onclick="handleClick()">Send</button>
     </div>
-    <div class="output" id="output" contenteditable="true">weather output</div>
+    <div class="output" id="output" contenteditable="true"></div>
 
     <script>
         function handleClick() {
@@ -92,8 +92,9 @@
                         alert("Error: " + data.error);
                     } else {
                         document.getElementById('output').innerText =
-                            `City: ${data.city},\n Temperature: ${data.temperature}°C,\n Sky: ${data.description},
-                            Wind: ${data.wind}m/s,\n`;
+                            `City: ${data.city},\n Temperature: ${data.temperature}°C,\nPreceived temperature: ${data.perceived}°C,
+                            Sky: ${data.description},\n Wind: ${data.wind}m/s,\n Humidity: ${data.humidity}%
+                            Pressure: ${data.pressure}hPa,\n Sunrise: ${data.sunrise},\n Sunset: ${data.sunset}`;
             }
             })
         }
