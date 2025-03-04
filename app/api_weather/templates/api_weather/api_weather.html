@@ -87,16 +87,22 @@
             let weatherValue = document.getElementById("userInput").value;
             fetch(`/api/weather/?weather=${weatherValue}`)
                 .then(response => response.json())
-                .then(data =>{
+                .then(data => {
                     if (data.error) {
                         alert("Error: " + data.error);
                     } else {
-                        document.getElementById('output').innerText =
-                            `City: ${data.city},\n Temperature: ${data.temperature}°C,\nPreceived temperature: ${data.perceived}°C,
-                            Sky: ${data.description},\n Wind: ${data.wind}m/s,\n Humidity: ${data.humidity}%
-                            Pressure: ${data.pressure}hPa,\n Sunrise: ${data.sunrise},\n Sunset: ${data.sunset}`;
-            }
-            })
+                        document.getElementById('output').innerHTML =
+                            `City:<b> ${data.city}</b><br>` +
+                            `Temperature:<b> ${data.temperature}°C</b><br>` +
+                            `Perceived temperature:<b> ${data.perceived}°C</b><br>` +
+                            `Sky:<b> ${data.description}</b><br>` +
+                            `Wind:<b> ${data.wind}m/s</b><br>` +
+                            `Humidity:<b> ${data.humidity}%</b><br>` +
+                            `Pressure:<b> ${data.pressure}hPa</b><br>` +
+                            `Sunrise:<b> ${data.sunrise}</b><br>` +
+                            `Sunset:<b> ${data.sunset}</b>`;
+                    }
+                });
         }
     </script>
 </body>
