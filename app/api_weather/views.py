@@ -4,7 +4,6 @@ from rest_framework.views import APIView  # type: ignore
 from rest_framework.response import Response  # type: ignore
 from rest_framework import status  # type: ignore
 from django.shortcuts import render
-from pprint import pprint
 
 
 def weather_view(request):
@@ -26,14 +25,11 @@ class weatherAPIView(APIView):
 def weatherGenerator(city):
     API = '2f42268437c101f743db3fefe02bfa4a'
     url = f"http://api.openweathermap.org/data/2.5/weather?appid={API}&q={city}&units=metric"  # noqa
-
     weather_data = requests.get(url).json()
-    pprint(weather_data)
-    sunrise = datetime.datetime.fromtimestamp(weather_data['sys']['sunrise']+3600)
-    sunset = datetime.datetime.fromtimestamp(weather_data['sys']['sunset']+3600)
-    print(sunrise.strftime('%H:%M:%S'))
-    print(sunset.strftime('%H:%M:%S'))
-    if 'weather' in weather_data and 'main' in weather_data:
+
+    if 'weather' in weather_data and 'main' in weather_data and 'wind' in weather_data:
+        sunrise = datetime.datetime.fromtimestamp(weather_data['sys']['sunrise']+3600)
+        sunset = datetime.datetime.fromtimestamp(weather_data['sys']['sunset']+3600)
         return {
             'temperature': weather_data['main']['temp'],
             'perceived': weather_data['main']['feels_like'],

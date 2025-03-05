@@ -25,7 +25,10 @@ from timer.views import (
     stopwatchAPIView,
     TimerAPIView,
 )
-from qr_coder.views import qr_code_view
+from qr_coder.views import (
+    qr_code_view,
+    encoderAPIView,
+)
 from api_weather.views import (
     weather_view,
     weatherAPIView,
@@ -44,4 +47,5 @@ urlpatterns = [
     path('api/timer/', TimerAPIView.as_view(), name='timer-api-view'),
     path('api/stopwatch/', stopwatchAPIView.as_view(), name='stopwatch'),
     path('api/weather/', weatherAPIView.as_view(), name='api-weather'),
+    path('api/encoder/', encoderAPIView.as_view(), name='api-encoder'),
 ]

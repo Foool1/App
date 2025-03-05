@@ -110,7 +110,7 @@
 
 
     <h1>Stopwatch</h1>
-    <p id="stopwatchDisplay">0</p><br>
+    <p id="stopwatchDisplay">00:00:00</p><br>
     <div class="button-container">
         <button onclick="startStopwatch()" class="start-button">Start</button>
         <button onclick="stopStopwatch()" class="start-button"> Stop</button>
@@ -227,7 +227,7 @@
         function resetStopwatch() {
             isStopwatchRunning = false;
             stopwatchTime = 0;
-            document.getElementById('stopwatchDisplay').innerText = '0';
+            document.getElementById('stopwatchDisplay').innerText = '00:00:00';
         }
 
         function zegar() {
