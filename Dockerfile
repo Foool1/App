@@ -1,30 +1,34 @@
-FROM python:3.9-alpine3.15
+FROM python:3.9-slim
+
 LABEL maintainer="foool1"
 ENV PYTHONUNBUFFERED 1
+
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./app /app
-COPY ./frontend /frontend
 WORKDIR /app
 EXPOSE 8000
 
 ARG DEV=false
-RUN python -m venv /py && \
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        postgresql-client \
+        libzbar0 \
+        build-essential \
+        libpq-dev \
+        libzbar-dev && \
+    python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
-    apk add --update --no-cache postgresql-client && \
-    apk add --update --no-cache --virtual .tmp-build-deps \
-        build-base postgresql-dev musl-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
-    if [ $DEV = "true" ]; \
-        then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
-    fi && \
-    rm -rf /tmp && \
-    apk del .tmp-build-deps && \
+    if [ "$DEV" = "true" ]; then /py/bin/pip install -r /tmp/requirements.dev.txt; fi && \
+    apt-get purge -y --auto-remove build-essential libpq-dev libzbar-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
     adduser \
         --disabled-password \
         --no-create-home \
         django-user
 
 ENV PATH="/py/bin:$PATH"
-
 USER django-user
