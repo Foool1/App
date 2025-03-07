@@ -43,6 +43,19 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+        .output {
+            border: 1px solid white;
+            padding: 10px;
+            width: 500px;
+            margin: 20px auto;
+            min-height: 30px;
+            text-align: left;
+            font-size: 25px;
+            cursor: text;
+            background-color: #333;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
 
         input[type="text"] {
             padding: 10px;
@@ -81,6 +94,7 @@
 </head>
 <body>
     <h1>Encoder</h1>
+    <h4>Input url link to encode</h4>
     <div class="exit">
         <a href="{% url 'main-page' %}">Exit</a>
     </div>
@@ -93,10 +107,12 @@
     <div class="container">
 
         <h1>Decoder</h1>
+        <h4>Input QR Code to decode</h4>
         <input type="file" id="imageInput" accept="image/*">
         <button onclick="uploadImage()">Wyślij</button>
         <p id="status"></p>
     </div>
+    <div class="output" id="output" contenteditable="true"></div>
 
     <script>
         function encoder(){
@@ -129,6 +145,9 @@
             .then(response => response.json())
             .then(data => {
                 status.textContent = data.message;
+                document.getElementById('output').innerText = data.filename
+
+
             })
             .catch(error => {
                 status.textContent = 'Błąd podczas przesyłania obrazu!';

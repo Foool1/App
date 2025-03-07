@@ -18,55 +18,74 @@ class encoderAPIView(APIView):
     def get(self, request):
         if 'url' in request.GET:
             url = request.GET.get('url')
-            removeImage()
+            removeImage('result.png')
             imageEncoder(url)
             return Response(url, status=status.HTTP_200_OK)
         return Response(url, status=status.HTTP_200_OK)
+
+
+class ImageUploadView(APIView):
+    def post(self, request, *args, **kwargs):
+        file_obj = request.FILES.get('image')
+        if not file_obj:
+            return Response({"message": "Image not sent!"}, status=status.HTTP_400_BAD_REQUEST)  # noqa
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        static_images_dir = os.path.join(script_dir, 'static', 'images')
+        filepath = os.path.join(static_images_dir, 'uploaded_image.png')
+
+        os.makedirs(static_images_dir, exist_ok=True)
+
+        removeImage('uploaded_image.png')
+
+        try:
+            with open(filepath, 'wb+') as destination:
+                for chunk in file_obj.chunks():
+                    destination.write(chunk)
+            time.sleep(0.1)
+
+            result = urlreturn(filepath)
+            return Response({"filename": result}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"message": f"Error processing image: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)  # noqa
+
+
+def urlreturn(filepath):
+    try:
+        with Image.open(filepath) as link:
+            result = decode(link)
+            if not result:
+                return "No QR code found"
+            decoded_object = result[0]
+            link_bytes = decoded_object.data
+            return link_bytes.decode('utf-8')
+    except Exception as e:
+        raise Exception(f"Error decoding QR code: {str(e)}")
 
 
 def imageEncoder(link):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     static_images_dir = os.path.join(script_dir, 'static', 'images')
 
-    if not os.path.exists(static_images_dir):
-        os.makedirs(static_images_dir)
+    os.makedirs(static_images_dir, exist_ok=True)
 
     img = qrcode.make(link)
     filepath = os.path.join(static_images_dir, 'result.png')
     img.save(filepath)
+    return filepath
 
 
-def removeImage():
+def removeImage(name):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     static_images_dir = os.path.join(script_dir, 'static', 'images')
-    filepath = os.path.join(static_images_dir, 'result.png')
+    filepath = os.path.join(static_images_dir, name)
 
-    if os.path.exists(filepath):
-        os.remove(filepath)
-        time.sleep(1)
-        return True
-    else:
+    try:
+        if os.path.exists(filepath):
+            os.remove(filepath)
+            time.sleep(0.1)
+            return True
         return False
-
-class ImageUploadView(APIView):
-    def post(self, request, *args, **kwargs):
-        file_obj = request.FILES.get('image')
-        if not file_obj:
-            return Response({"message": "Nie przesłano obrazu!"}, status=status.HTTP_400_BAD_REQUEST)
-
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        static_images_dir = os.path.join(script_dir, 'static', 'images')
-        filepath = os.path.join(static_images_dir, 'uploaded_image.png')
-        print("chuj")
-
-        if not os.path.exists(static_images_dir):
-            os.makedirs(static_images_dir)
-
-        with open(filepath, 'wb+') as destination:
-            for chunk in file_obj.chunks():
-                destination.write(chunk)
-
-        return Response({
-            "message": "Obraz został zapisany!",
-            "filename": file_obj.name
-        }, status=status.HTTP_201_CREATED)
+    except Exception:
+        return False

@@ -1,13 +1,9 @@
 # base
 base for new DRF projects
 
-To Do today:
+Take functions into classes
 
-
-To Do:
-API_weather
-
-QRCode
+separate css/html/js
 
 
 background remover,
@@ -17,3 +13,4 @@ add tests
 check flake8
 
 sudo docker compose run --rm app sh -c ""
+
