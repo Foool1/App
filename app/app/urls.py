@@ -37,6 +37,7 @@ from api_weather.views import (
 
 from ocr.views import(
     ocr_view,
+    ocrAPIView,
 )
 urlpatterns = [
     path('', main_page, name='main-page'),
@@ -52,4 +53,5 @@ urlpatterns = [
     path('api/weather/', weatherAPIView.as_view(), name='api-weather'),
     path('api/encoder/', encoderAPIView.as_view(), name='api-encoder'),
     path('api/upload/', ImageUploadView.as_view(), name='upload'),
+    path('api/ocr/', ocrAPIView.as_view(), name='api-ocr'),
 ]
