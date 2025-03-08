@@ -1,11 +1,13 @@
-from rest_framework.views import APIView # type: ignore
-from rest_framework.response import Response # type: ignore
-from rest_framework import status # type: ignore
+from rest_framework.views import APIView  # type: ignore
+from rest_framework.response import Response  # type: ignore
+from rest_framework import status  # type: ignore
 from django.shortcuts import render
-import pytesseract # type: ignore
+import pytesseract  # type: ignore
 from PIL import Image
 import os
 import time
+
+
 def ocr_view(request):
     return render(request, 'ocr.html')
 
@@ -37,7 +39,6 @@ class ocrAPIView(APIView):
 
 def ocr_image(filepath):
 
-
     print("Ścieżka do pliku:", filepath)
     print("Czy plik istnieje?", os.path.exists(filepath))
 
@@ -54,6 +55,7 @@ def ocr_image(filepath):
 
     except Exception as e:
         return f"Wystąpił błąd: {str(e)}"
+
 
 def removeImage(name):
     script_dir = os.path.dirname(os.path.abspath(__file__))

@@ -35,7 +35,7 @@ from api_weather.views import (
     weatherAPIView,
 )
 
-from ocr.views import(
+from ocr.views import (
     ocr_view,
     ocrAPIView,
 )
