@@ -1,39 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplications</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background-color: #202123;
-            color: white;
-        }
-        h1 {
-            font-size: 32px;
-        }
-        .menu {
-            margin-top: 30px;
-        }
-        .menu a {
-            display: block;
-            margin: 15px auto;
-            width: 250px;
-            padding: 15px;
-            text-decoration: none;
-            color: white;
-            background-color: #757575;
-            border-radius: 8px;
-            font-size: 20px;
-            line-height: 1.5;
-}
-        .menu a:hover {
-            background-color: #121212;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
 

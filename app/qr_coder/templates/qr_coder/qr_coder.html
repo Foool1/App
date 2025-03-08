@@ -1,107 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QrCoder</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background-color: #202123;
-            color: white;
-        }
-        .exit {
-            margin-top: 30px;
-        }
-        .exit a {
-            display: block;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            margin: 10px auto;
-            width: 100px;
-            padding: 10px;
-            text-decoration: none;
-            color: white;
-            background-color: #757575;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-        .exit a:hover {
-
-            background-color: #121212;
-        }
-        .input-container {
-            margin-top: 20px;
-        }
-        .container {
-            text-align: center;
-            background: #202123;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-        .output {
-            border: 1px solid white;
-            padding: 10px;
-            width: 500px;
-            margin: 20px auto;
-            min-height: 30px;
-            text-align: left;
-            font-size: 25px;
-            cursor: text;
-            background-color: #333;
-            border-radius: 5px;
-            line-height: 1.8;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            width: 500px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-        }
-        img {
-            margin-top: 20px;
-            max-width: 500px;
-        }
-        img.qr-image {
-            margin-top: 20px;
-            max-width: 500px;
-        }
-        button {
-            padding: 10px 15px;
-            margin-left: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #757575;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #121212;
-        }
-        #status {
-            margin-top: 10px;
-            color: #333;
-}
-
-    </style>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <h1>Encoder</h1>
+
     <h4>Input url link to encode</h4>
+
     <div class="exit">
         <a href="{% url 'main-page' %}">Exit</a>
     </div>
+
     <div class="input-container">
         <input type="text" id="userInput" placeholder="Input url...">
         <button onclick="encoder()">Send</button>
     </div>
+
     <img src="/static/images/default.jpg" id="qrImage">
 
     <div class="container">
@@ -112,12 +31,13 @@
         <button onclick="uploadImage()">Send</button>
         <p id="status"></p>
     </div>
-    <div class="output" id="output" contenteditable="true"></div>
+
+    <div class="output" id="output"></div>
 
     <script>
         function encoder(){
             let url = document.getElementById("userInput").value;
-            fetch(`/api/encoder/?url=${encodeURIComponent(url)}`)
+            fetch(`/api/ocr/?url=${encodeURIComponent(url)}`)
             .then(response => response.json())
             .then(data => {
                 let qrImage = document.getElementById("qrImage");

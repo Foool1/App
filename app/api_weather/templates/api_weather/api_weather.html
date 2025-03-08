@@ -1,74 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background-color: #202123;
-            color: white;
-        }
-        .exit {
-            margin-top: 30px;
-        }
-        .exit a {
-            display: block;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            margin: 10px auto;
-            width: 100px;
-            padding: 10px;
-            text-decoration: none;
-            color: white;
-            background-color: #757575;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-        .exit a:hover {
-            background-color: #121212;
-        }
-        .input-container {
-            margin-top: 20px;
-        }
-        input[type="text"] {
-            padding: 10px;
-            width: 300px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 15px;
-            margin-left: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #757575;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #121212;
-        }
-        .output {
-            border: 1px solid white;
-            padding: 10px;
-            width: 400px;
-            margin: 20px auto;
-            min-height: 30px;
-            text-align: left;
-            font-size: 25px;
-            cursor: text;
-            background-color: #333;
-            border-radius: 5px;
-            line-height: 1.8;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <h1>Weather</h1>
@@ -80,7 +17,7 @@
         <input type="text" id="userInput" placeholder="Enter city name...">
         <button onclick="handleClick()">Send</button>
     </div>
-    <div class="output" id="output" contenteditable="true"></div>
+    <div class="output" id="output"></div>
 
     <script>
         function handleClick() {
