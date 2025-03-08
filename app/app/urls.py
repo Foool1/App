@@ -34,8 +34,10 @@ from api_weather.views import (
     weather_view,
     weatherAPIView,
 )
-from background_remover.views import background_remover_view
 
+from ocr.views import(
+    ocr_view,
+)
 urlpatterns = [
     path('', main_page, name='main-page'),
     path('admin/', admin.site.urls),
@@ -43,7 +45,7 @@ urlpatterns = [
     path('generate-password/', password_generator_page_view, name='generate-password'),  # noqa
     path('qr-coder/', qr_code_view, name='qr-coder'),
     path('weather/', weather_view, name='weather'),
-    path('background-remover', background_remover_view, name='background-remover'),  # noqa
+    path('ocr/', ocr_view, name='ocr'),
     path('api/generate-password/', PasswordGeneratorAPIView.as_view(), name='generate-password-api'),  # noqa
     path('api/timer/', TimerAPIView.as_view(), name='timer-api-view'),
     path('api/stopwatch/', stopwatchAPIView.as_view(), name='stopwatch'),

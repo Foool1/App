@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'password_generator',
     'qr_coder',
     'timer',
-    'background_remover',
+    'ocr',
 ]
 
 MIDDLEWARE = [

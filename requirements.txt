@@ -4,3 +4,5 @@ psycopg2>=2.8.6,<2.9
 qrcode[pil]>=7.3,<7.4
 pyzbar
 requests
+pytesseract==0.3.13
+Pillow>=9.0.0
