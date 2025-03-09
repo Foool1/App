@@ -9,7 +9,6 @@
 </head>
 <body>
     <h1>Encoder</h1>
-
     <h4>Input url link to encode</h4>
 
     <div class="exit">
@@ -24,7 +23,6 @@
     <img src="/static/images/default.jpg" id="qrImage">
 
     <div class="container">
-
         <h1>Decoder</h1>
         <h2>Input QR Code to decode</h2>
         <input type="file" id="imageInput" accept="image/*">
@@ -35,16 +33,16 @@
     <div class="output" id="output"></div>
 
     <script>
+        let currentFilename = null;
         function encoder(){
             let url = document.getElementById("userInput").value;
-            fetch(`/api/ocr/?url=${encodeURIComponent(url)}`)
+            fetch(`/api/encoder/?url=${encodeURIComponent(url)}`)
             .then(response => response.json())
             .then(data => {
                 let qrImage = document.getElementById("qrImage");
                 qrImage.src = "/static/images/result.png?" + new Date().getTime();;
             })
-        }
-        let currentFilename = null;
+}
         function uploadImage() {
             const imageInput = document.getElementById('imageInput');
             const status = document.getElementById('status');
@@ -66,8 +64,6 @@
             .then(data => {
                 status.textContent = data.message;
                 document.getElementById('output').innerText = data.filename
-
-
             })
             .catch(error => {
                 status.textContent = 'Sending image error!';

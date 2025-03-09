@@ -13,7 +13,10 @@ def weather_view(request):
 
 class weatherAPIView(APIView):
     def weatherGenerator(self, city):
+
+        """W tym miejscu wprowadzic swoje API"""
         API = '2f42268437c101f743db3fefe02bfa4a'
+
         url = f"http://api.openweathermap.org/data/2.5/weather?appid={API}&q={city}&units=metric"  # noqa
         weather_data = requests.get(url).json()
 
