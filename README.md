@@ -1,8 +1,7 @@
 # Recipe App
 
 ## Opis
-
-
+Zbior roznych aplikacji do codziennego uzytku
 
 ## Funkcje
 
