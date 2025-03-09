@@ -202,7 +202,7 @@ img.qr-image {
     min-width: 200px;
 }
 
-#kontenerListy {
+#listContainer {
     float: left;
     width: 400px;
     position: absolute;

@@ -8,14 +8,13 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-
     <h1>OCR</h1>
 
     <div class="exit">
         <a href="{% url 'main-page' %}">Exit</a>
     </div>
-    <div class="container">
 
+    <div class="container">
         <h4>Input image to ocr</h4>
         <input type="file" id="imageInput" accept="image/*">
         <button onclick="uploadImage()">Send</button>
@@ -31,7 +30,7 @@
             const file = imageInput.files[0];
 
             if (!file) {
-                status.textContent = 'Proszę wybrać obraz!';
+                status.textContent = 'Choose the image!';
                 return;
             }
 
@@ -48,12 +47,10 @@
                 document.getElementById('output').innerText = data.filename
             })
             .catch(error => {
-                status.textContent = 'Błąd podczas przesyłania obrazu!';
+                status.textContent = 'Sending image error';
                 console.error('Error:', error);
             });
 }
     </script>
-
-
 </body>
 </html>

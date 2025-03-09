@@ -51,7 +51,7 @@
             const file = imageInput.files[0];
 
             if (!file) {
-                status.textContent = 'Proszę wybrać obraz!';
+                status.textContent = 'Choose the image!';
                 return;
             }
 
@@ -70,7 +70,7 @@
 
             })
             .catch(error => {
-                status.textContent = 'Błąd podczas przesyłania obrazu!';
+                status.textContent = 'Sending image error!';
                 console.error('Error:', error);
             });
 }

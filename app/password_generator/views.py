@@ -19,13 +19,11 @@ def generate_password(length):
 
 
 def password_generator_page_view(request):
-    """Widok renderujący stronę HTML"""
     return render(request, 'generate_password.html')
 
 
 class PasswordGeneratorAPIView(APIView):
     def get(self, request):
-        """API endpoint do generowania hasła"""
         try:
             length = int(request.GET.get('length', 12))
         except ValueError:

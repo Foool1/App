@@ -38,11 +38,6 @@ class ocrAPIView(APIView):
 
 
 def ocr_image(filepath):
-
-    print("Ścieżka do pliku:", filepath)
-    print("Czy plik istnieje?", os.path.exists(filepath))
-
-    print("Rozpoznany tekst:")
     try:
         if not os.path.exists(filepath):
             return "Plik nie istnieje!"
@@ -50,11 +45,10 @@ def ocr_image(filepath):
         img = Image.open(filepath)
 
         text = pytesseract.image_to_string(img)
-        print(text)
         return text
 
     except Exception as e:
-        return f"Wystąpił błąd: {str(e)}"
+        return f"Error: {str(e)}"
 
 
 def removeImage(name):

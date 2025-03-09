@@ -11,6 +11,7 @@
     <p id="time">00:00:00</p>
 
     <h1>Timer</h1>
+
     <label for="hoursInput">Hours: /\</label>
     <label for="minutesInput"> Minutes: /\</label>
     <label for="secondsInput">Seconds:</label><br>
@@ -18,11 +19,11 @@
     <input type="number" id="minutesInput" value="0" min="0" max="60">
     <input type="number" id="secondsInput" value="0" min="0" max="60"><br>
     <p id="timeDisplay">00:00:00</p><br>
+
     <div class="button-container">
         <button onclick="startTimer()" class="start-button" >Start</button>
         <button onclick="resetTimer()" class="start-button" >Reset</button>
     </div>
-
 
     <h1>Stopwatch</h1>
     <p id="stopwatchDisplay">00:00:00</p><br>
@@ -32,13 +33,13 @@
         <button onclick="resetStopwatch()" class="start-button">Reset</button>
     </div>
 
-
-
     <div class="exit">
         <a href="{% url 'main-page' %}">Exit</a>
     </div>
 
     <script>
+        let stopwatchTime = 0;
+        let isStopwatchRunning = false;
         let isTimerRunning = false;
         function startTimer() {
             let hours = parseInt(document.getElementById('hoursInput').value, 10);
@@ -49,7 +50,6 @@
             if (isTimerRunning) {
                 return;
             }
-
             fetch(`/api/timer/?time=${time}`)
                 .then(response => {
                     if (!response.ok) throw new Error('Server error');
@@ -64,7 +64,6 @@
                 })
                 .catch(error => console.error('Error', error));
             }
-
         function updateTime() {
             fetch(`/api/timer/`)
                 .then(response => response.json())
@@ -76,18 +75,15 @@
                         } else {
                             isTimerRunning = false;
                         }
-
                     } else {
                         console.error('Server error:', data);
                     }
                 }).catch(error => console.error('Error:', error));
         }
-
         function resetTimer() {
             isTimerRunning = false;
 
             document.getElementById('timeDisplay').innerText = "00:00:00";
-
             document.getElementById('hoursInput').value = 0;
             document.getElementById('minutesInput').value = 0;
             document.getElementById('secondsInput').value = 0;
@@ -101,11 +97,7 @@
                     console.log('Timer zresetowany na serwerze:', data);
                 })
                 .catch(error => console.error('Błąd podczas resetowania timera:', error));
-        }
-
-
-        let stopwatchTime = 0;
-        let isStopwatchRunning = false;
+}
         function stopwatch(){
             if (!isStopwatchRunning) return;
 
@@ -127,36 +119,36 @@
                 console.error('Server error:', data);
             }
             }).catch(error => console.error('Error', error));
-        }
+}
         function startStopwatch() {
             if (!isStopwatchRunning) {
                 isStopwatchRunning = true;
                 stopwatch();
             }
-        }
+}
 
         function stopStopwatch() {
             isStopwatchRunning = false;
-        }
+}
 
         function resetStopwatch() {
             isStopwatchRunning = false;
             stopwatchTime = 0;
             document.getElementById('stopwatchDisplay').innerText = '00:00:00';
-        }
+}
 
-        function zegar() {
+        function clock() {
             setInterval(() => {
                 let date = new Date();
                 date.setTime(date.getTime() + 3600000);
                 document.querySelector("#time").innerHTML = date.toISOString().substr(11, 8);
             }, 1000);
-        }
+}
 
         window.onload = function(){
-            zegar();
+            clock();
         }
-    </script>
 
+    </script>
 </body>
 </html>

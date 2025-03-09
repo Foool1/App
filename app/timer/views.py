@@ -6,7 +6,7 @@ from datetime import timedelta, datetime
 
 
 def timer_view(request):
-    return render(request, 'timer/timer.html')
+    return render(request, 'timer.html')
 
 
 class TimerAPIView(APIView):
@@ -35,9 +35,9 @@ class TimerAPIView(APIView):
         if 'end_time' in request.session:
             del request.session['end_time']
             request.session.modified = True
-            return Response({'message': 'Timer zresetowany'}, status=status.HTTP_200_OK)  # noqa
+            return Response({'message': 'Timer reset'}, status=status.HTTP_200_OK)  # noqa
         else:
-            return Response({'message': 'Brak aktywnego timera do zresetowania'}, status=status.HTTP_200_OK)  # noqa
+            return Response({'message': 'No active timer to reset'}, status=status.HTTP_200_OK)  # noqa
 
 
 class stopwatchAPIView(APIView):
