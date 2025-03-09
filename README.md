@@ -1,15 +1,15 @@
-# Recipe App
+# App
 
 ## Opis
-Zbior roznych aplikacji do codziennego uzytku
+App to wszechstronna aplikacja oferująca zestaw przydatnych narzędzi codziennego użytku, takich jak generator haseł, minutnik, narzędzie do kodowania QR, prognoza pogody oraz OCR. 
 
 ## Funkcje
 
-- **Password Generator**: Prosty generator hasel
-- **Timer**: Minutnik oraz stoper
-- **QRCoder**: Encoder i Decoder kodow QR
-- **Weather**: Aktualna pogoda w danym miescie
-- **OCR**: Wycinanie tekstu ze zdjecia
+- **Password Generator**: Prosty generator haseł.
+- **Timer**: Minutnik oraz stoper.
+- **QRCoder**: Encoder i decoder kodów QR.
+- **Weather**: Aktualna pogoda w danym mieście.
+- **OCR**: Wycinanie tekstu ze zdjęcia.
 
 ## Wymagania
 
