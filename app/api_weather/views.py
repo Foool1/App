@@ -34,13 +34,9 @@ class weatherAPIView(APIView):
         else:
             return {'error': 'City not found'}
 
-
     def get(self, request):
         city = request.GET.get('weather')
         if not city:
             return Response ({'error': 'No city in request'}, status=status.HTTP_400_BAD_REQUEST)  # noqa
         weather_info = self.weatherGenerator(city)
         return Response(weather_info, status=status.HTTP_200_OK)
-
-
-

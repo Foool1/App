@@ -26,7 +26,6 @@ class ocrAPIView(APIView):
         except Exception as e:
             return f"Error: {str(e)}"
 
-
     def removeImage(self, name):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         static_images_dir = os.path.join(script_dir, 'static', 'images')
@@ -40,7 +39,6 @@ class ocrAPIView(APIView):
             return False
         except Exception:
             return False
-
 
     def post(self, request, *args, **kwargs):
         file_obj = request.FILES.get('image')
@@ -64,6 +62,3 @@ class ocrAPIView(APIView):
 
         except Exception as e:
             return Response({"message": f"Error processing image: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)  # noqa
-
-
-

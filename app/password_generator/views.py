@@ -5,7 +5,6 @@ from django.shortcuts import render
 import random
 
 
-
 def password_generator_page_view(request):
     return render(request, 'generate_password.html')
 

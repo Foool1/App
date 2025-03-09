@@ -20,7 +20,6 @@ class TimerAPIView(APIView):
 
         return f"{hours:02}:{minutes:02}:{seconds:02}"
 
-
     def get(self, request):
         if 'time' in request.GET:
             start_time = datetime.now()
@@ -57,6 +56,3 @@ class stopwatchAPIView(APIView):
             stopwatchTime = int(request.GET.get('stopwatchTime', 10))
             return Response({'stopwatchTime': TimerAPIView.format_time(stopwatchTime)}, status=status.HTTP_200_OK)  # noqa
         return Response({'error': 'Missing parameter'}, status=status.HTTP_400_BAD_REQUEST)  # noqa
-
-
-

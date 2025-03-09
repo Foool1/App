@@ -13,9 +13,6 @@ def qr_code_view(request):
     return render(request, 'qr_coder/qr_coder.html')
 
 
-
-
-
 class ImageUploadView(APIView):
     @staticmethod
     def imageEncoder(link):
@@ -92,5 +89,3 @@ class encoderAPIView(APIView):
             ImageUploadView.imageEncoder(url)
             return Response(url, status=status.HTTP_200_OK)
         return Response(url, status=status.HTTP_200_OK)
-
-
