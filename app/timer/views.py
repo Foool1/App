@@ -10,6 +10,16 @@ def timer_view(request):
 
 
 class TimerAPIView(APIView):
+    @staticmethod
+    def format_time(seconds):
+        hours = int(seconds / 3600)
+        rest = seconds % 3600
+        minutes = int(rest / 60)
+        rest = seconds % 60
+        seconds = int(rest)
+
+        return f"{hours:02}:{minutes:02}:{seconds:02}"
+
 
     def get(self, request):
         if 'time' in request.GET:
@@ -19,14 +29,14 @@ class TimerAPIView(APIView):
             request.session['end_time'] = end_time.isoformat()
             request.session.modified = True
 
-            return Response({'time': format_time(countdown_time)}, status=status.HTTP_200_OK)  # noqa
+            return Response({'time': self.format_time(countdown_time)}, status=status.HTTP_200_OK)  # noqa
 
         elif 'end_time' in request.session:
             end_time = datetime.fromisoformat(request.session['end_time'])
             remaining_time = max(0, int((end_time - datetime.now()).total_seconds()))  # noqa
             request.session.modified = True
-            print(format_time(remaining_time))
-            return Response({'time': format_time(remaining_time)}, status=status.HTTP_200_OK)  # noqa
+            print(self.format_time(remaining_time))
+            return Response({'time': self.format_time(remaining_time)}, status=status.HTTP_200_OK)  # noqa
 
         return Response({'error': 'Invalid request'},
                         status=status.HTTP_400_BAD_REQUEST)
@@ -45,15 +55,8 @@ class stopwatchAPIView(APIView):
     def get(self, request):
         if 'stopwatchTime' in request.GET:
             stopwatchTime = int(request.GET.get('stopwatchTime', 10))
-            return Response({'stopwatchTime': format_time(stopwatchTime)}, status=status.HTTP_200_OK)  # noqa
+            return Response({'stopwatchTime': TimerAPIView.format_time(stopwatchTime)}, status=status.HTTP_200_OK)  # noqa
         return Response({'error': 'Missing parameter'}, status=status.HTTP_400_BAD_REQUEST)  # noqa
 
 
-def format_time(seconds):
-    hours = int(seconds / 3600)
-    rest = seconds % 3600
-    minutes = int(rest / 60)
-    rest = seconds % 60
-    seconds = int(rest)
 
-    return f"{hours:02}:{minutes:02}:{seconds:02}"
