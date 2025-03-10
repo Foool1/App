@@ -1,7 +1,7 @@
-# App
+# GroupApps
 
 ## Opis
-App to wszechstronna aplikacja oferująca zestaw przydatnych narzędzi codziennego użytku, takich jak generator haseł, minutnik, narzędzie do kodowania QR, prognoza pogody oraz OCR.
+GroupsApps to wszechstronna aplikacja oferująca zestaw przydatnych narzędzi codziennego użytku, takich jak generator haseł, minutnik, narzędzie do kodowania QR, prognoza pogody oraz OCR.
 
 ## Funkcje
 
