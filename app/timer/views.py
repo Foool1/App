@@ -49,7 +49,7 @@ class TimerAPIView(APIView):
             return Response({'message': 'No active timer to reset'}, status=status.HTTP_200_OK)  # noqa
 
 
-class stopwatchAPIView(APIView):
+class StopwatchAPIView(APIView):
 
     def get(self, request):
         if 'stopwatchTime' in request.GET:

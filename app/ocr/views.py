@@ -26,7 +26,7 @@ class ocrAPIView(APIView):
         except Exception as e:
             return f"Error: {str(e)}"
 
-    def removeImage(self, name):
+    def remove_image(self, name):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         static_images_dir = os.path.join(script_dir, 'static', 'images')
         filepath = os.path.join(static_images_dir, name)
@@ -50,7 +50,7 @@ class ocrAPIView(APIView):
         filepath = os.path.join(static_images_dir, 'input.png')
 
         os.makedirs(static_images_dir, exist_ok=True)
-        self.removeImage("input.png")
+        self.remove_image("input.png")
 
         try:
             with open(filepath, 'wb+') as destination:

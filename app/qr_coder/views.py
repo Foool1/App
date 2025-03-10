@@ -80,7 +80,7 @@ class ImageUploadView(APIView):
             return Response({"message": f"Error processing image: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)  # noqa
 
 
-class encoderAPIView(APIView):
+class EncoderAPIView(APIView):
 
     def get(self, request):
         if 'url' in request.GET:

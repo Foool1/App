@@ -22,17 +22,17 @@ from password_generator.views import (
 )
 from timer.views import (
     timer_view,
-    stopwatchAPIView,
+    StopwatchAPIView,
     TimerAPIView,
 )
 from qr_coder.views import (
     qr_code_view,
-    encoderAPIView,
+    EncoderAPIView,
     ImageUploadView,
 )
 from api_weather.views import (
     weather_view,
-    weatherAPIView,
+    WeatherAPIView,
 )
 
 from ocr.views import (
@@ -49,9 +49,9 @@ urlpatterns = [
     path('ocr/', ocr_view, name='ocr'),
     path('api/generate-password/', PasswordGeneratorAPIView.as_view(), name='generate-password-api'),  # noqa
     path('api/timer/', TimerAPIView.as_view(), name='timer-api-view'),
-    path('api/stopwatch/', stopwatchAPIView.as_view(), name='stopwatch'),
-    path('api/weather/', weatherAPIView.as_view(), name='api-weather'),
-    path('api/encoder/', encoderAPIView.as_view(), name='api-encoder'),
+    path('api/stopwatch/', StopwatchAPIView.as_view(), name='stopwatch'),
+    path('api/weather/', WeatherAPIView.as_view(), name='api-weather'),
+    path('api/encoder/', EncoderAPIView.as_view(), name='api-encoder'),
     path('api/upload/', ImageUploadView.as_view(), name='upload'),
     path('api/ocr/', ocrAPIView.as_view(), name='api-ocr'),
 ]

@@ -11,10 +11,10 @@ def weather_view(request):
     return render(request, 'api_weather/api_weather.html')
 
 
-class weatherAPIView(APIView):
-    def weatherGenerator(self, city):
+class WeatherAPIView(APIView):
+    def weather_generator(self, city):
 
-        """W tym miejscu wprowadzic swoje API"""
+        """Input your API key here"""
         API = ''
 
         url = f"http://api.openweathermap.org/data/2.5/weather?appid={API}&q={city}&units=metric"  # noqa
@@ -41,5 +41,5 @@ class weatherAPIView(APIView):
         city = request.GET.get('weather')
         if not city:
             return Response ({'error': 'No city in request'}, status=status.HTTP_400_BAD_REQUEST)  # noqa
-        weather_info = self.weatherGenerator(city)
+        weather_info = self.weather_generator(city)
         return Response(weather_info, status=status.HTTP_200_OK)
