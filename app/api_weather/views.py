@@ -20,6 +20,9 @@ class WeatherAPIView(APIView):
         url = f"http://api.openweathermap.org/data/2.5/weather?appid={API}&q={city}&units=metric"  # noqa
         weather_data = requests.get(url).json()
 
+        if not API:
+            return{'error': 'API key error, please input your api in the code, check README for more informations.'}
+
         if 'weather' in weather_data and 'main' in weather_data and 'wind' in weather_data:  # noqa
             sunrise = datetime.datetime.fromtimestamp(weather_data['sys']['sunrise']+3600)  # noqa
             sunset = datetime.datetime.fromtimestamp(weather_data['sys']['sunset']+3600)  # noqa
