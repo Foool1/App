@@ -36,7 +36,6 @@ Aplikacja udostępnia interaktywną dokumentację API za pomocą Swaggera. Aby z
 ```bash
 http://127.0.0.1:8000/
 ```
-
 Aplikację można testować, korzystając z testowych zdjęć znajdujących się w folderze App/test_utils.
 
 Aby korzystać z aplikacji Weather, należy zaimportować własny klucz API, który można uzyskać na stronie openweathermap.org. W tym celu należy założyć konto, a następnie przejść do zakładki „My API keys”, pobrać swój klucz API i wkleić go do zmiennej API w pliku app/api_weather/views.py.
