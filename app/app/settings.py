@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'qr_coder',
     'timer',
     'ocr',
+    'pdfcut',
 ]
 
 MIDDLEWARE = [
@@ -131,7 +132,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Wskazuje na folder static w głównym katalogu projektu
+    BASE_DIR / "static",
 ]
 
 # Default primary key field type

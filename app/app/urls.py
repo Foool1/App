@@ -39,6 +39,10 @@ from ocr.views import (
     ocr_view,
     ocrAPIView,
 )
+
+from pdfcut.views import (
+    pdf_view,
+)
 urlpatterns = [
     path('', main_page, name='main-page'),
     path('admin/', admin.site.urls),
@@ -47,6 +51,7 @@ urlpatterns = [
     path('qr-coder/', qr_code_view, name='qr-coder'),
     path('weather/', weather_view, name='weather'),
     path('ocr/', ocr_view, name='ocr'),
+    path('pdfcut/', pdf_view, name='pdfcut'),
     path('api/generate-password/', PasswordGeneratorAPIView.as_view(), name='generate-password-api'),  # noqa
     path('api/timer/', TimerAPIView.as_view(), name='timer-api-view'),
     path('api/stopwatch/', StopwatchAPIView.as_view(), name='stopwatch'),
@@ -54,4 +59,5 @@ urlpatterns = [
     path('api/encoder/', EncoderAPIView.as_view(), name='api-encoder'),
     path('api/upload/', ImageUploadView.as_view(), name='upload'),
     path('api/ocr/', ocrAPIView.as_view(), name='api-ocr'),
+
 ]
